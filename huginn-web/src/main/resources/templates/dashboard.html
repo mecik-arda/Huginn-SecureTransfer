@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Huginn SFT-Pro | Cyber Security Framework</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #050505; color: #00ffcc; text-align: center; padding-top: 30px; }
+        .container { border: 2px solid #00ffcc; display: inline-block; padding: 30px; border-radius: 15px; box-shadow: 0 0 40px rgba(0, 255, 204, 0.2); background: #0f0f0f; min-width: 750px; }
+        h1 { color: #fff; text-transform: uppercase; letter-spacing: 5px; text-shadow: 0 0 15px #00ffcc; margin-bottom: 5px; }
+        .status-header { background: #1a1a1a; padding: 15px; border-radius: 8px; margin: 25px 0; border-left: 5px solid #00ffcc; text-align: left; font-size: 0.9em; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #111; }
+        th, td { padding: 15px; border-bottom: 1px solid #222; text-align: left; }
+        th { color: #666; font-size: 0.75em; letter-spacing: 2px; }
+        
+        .type-TXT { color: #ffffff; border: 1px solid #ffffff; padding: 3px 7px; border-radius: 4px; font-size: 0.7em; }
+        .type-IMG { color: #00bcff; border: 1px solid #00bcff; padding: 3px 7px; border-radius: 4px; font-size: 0.7em; }
+        .type-BIN { color: #ff3e3e; border: 1px solid #ff3e3e; padding: 3px 7px; border-radius: 4px; font-size: 0.7em; }
+        
+        .timer { color: #ffcc00; font-family: 'Courier New', monospace; font-weight: bold; }
+        .footer { margin-top: 40px; font-size: 0.75em; color: #333; border-top: 1px solid #222; padding-top: 20px; }
+        
+        #toast { visibility: hidden; min-width: 300px; background-color: #00ffcc; color: #000; text-align: center; border-radius: 4px; padding: 16px; position: fixed; z-index: 100; right: 30px; top: 30px; font-weight: bold; box-shadow: 0 0 20px #00ffcc; }
+        #toast.show { visibility: visible; animation: slideIn 0.5s, slideOut 0.5s 2.5s; }
+        @keyframes slideIn { from {right: 0; opacity: 0;} to {right: 30px; opacity: 1;} }
+        @keyframes slideOut { from {right: 30px; opacity: 1;} to {right: 0; opacity: 0;} }
+    </style>
+</head>
+<body>
+    <div id="toast">INCOMING DATA DETECTED: NODE_01 SUCCESS</div>
+
+    <div class="container">
+        <h1>HUGINN SFT-PRO</h1>
+        <div class="status-header">
+            <span style="color:#888">CORE STATUS:</span> <span style="color:#00ffcc" th:text="${systemStatus}">OPERATIONAL</span> | 
+            <span style="color:#888">OPERATOR:</span> <span th:text="${developer}">ARDA MECIK</span> |
+            <span style="color:#888">AUTO-PURGE:</span> <span style="color:#ffcc00">ENABLED</span>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>DATA_TYPE</th>
+                    <th>IDENTIFIER</th>
+                    <th>INTEGRITY</th>
+                    <th>TIMESTAMP</th>
+                    <th>TTL (PURGE)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="t : ${transfers}">
+                    <td><span th:class="'type-' + ${t.fileType}" th:text="${t.fileType}">NULL</span></td>
+                    <td th:text="${t.fileName}">UNKNOWN</td>
+                    <td style="color:#00ff00" th:text="${t.status}">PENDING</td>
+                    <td th:text="${t.timestamp}">00:00:00</td>
+                    <td class="timer" th:text="${t.timeLeftMinutes} + 'm REMAINING'">-</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="footer">
+            SECURE FILE TRANSFER FRAMEWORK v1.0.4 | PROJECT HUGINN | AUTHOR: ARDA MECIK
+        </div>
+    </div>
+
+    <script>
+        function triggerToast() {
+            var x = document.getElementById("toast");
+            x.className = "show";
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+        }
+        setTimeout(triggerToast, 4000);
+    </script>
+</body>
+</html>

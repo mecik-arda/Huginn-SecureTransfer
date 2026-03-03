@@ -1,0 +1,12 @@
+**/target/
+*.class
+*.log
+logs/
+*.jar
+.vscode/
+.idea/
+gizli_belge.txt
+test_dosyasi.txt
+fix_packages.ps1
+organize_project.ps1
+organize_project.sh

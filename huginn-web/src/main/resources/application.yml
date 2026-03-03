@@ -1,0 +1,19 @@
+huginn:
+  app:
+    name: Huginn Secure Transfer
+    developer: Arda Meçik
+  server:
+    port: 9090
+    max-threads: 50
+  security:
+    aes-key-size: 256
+    rsa-key-size: 2048
+    anti-replay-ttl-seconds: 300
+    rate-limit:
+      max-requests: 10
+      window-seconds: 60
+  transfer:
+    chunk-size-mb: 4
+    enable-gzip: true
+  metrics:
+    prometheus-port: 9091
